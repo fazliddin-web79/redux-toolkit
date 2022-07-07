@@ -1,19 +1,10 @@
 import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../features/modal/modalSlice";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 const CartContainer = () => {
   const dispatch = useDispatch();
   const { cartItems, total, amount } = useSelector((store) => store.cart);
-  const [market, setMarket] = useState([]);
-  useEffect(() => {
-    axios.get("https://course-api.com/react-store-products").then((res) => {
-      console.log(res);
-      setMarket(res.data);
-    });
-  }, []);
 
   if (amount < 1) {
     return (
@@ -35,11 +26,6 @@ const CartContainer = () => {
         {cartItems.map((item) => {
           return <CartItem key={item.id} {...item} />;
         })}
-        <div>
-          {market?.map((item) => {
-            return <CartItem key={item.id} {...item} />;
-          })}
-        </div>
       </div>
       <footer>
         <hr />
